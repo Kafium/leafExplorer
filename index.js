@@ -10,11 +10,11 @@ const explorer = new net.Socket()
 explorer.connect(config.nodeToCommunicate.split(':')[1], config.nodeToCommunicate.split(':')[0], function () {
   function answerData(req, res) {
       if(req.url.startsWith('/api/getBlockByHash?')) {
-        explorer.write(`getBlockByHash/${req.url.split('?')[1]}`)
+        explorer.write(`getBlockByHash/${req.url.split('?')[1]}&&`)
         waitForData(explorer, 'Block').then(data => {
           res.writeHead(200, {'Content-Type': 'application/json'});
 
-          res.write(data.toString().replace('Block/', ''))
+          res.write(data.toString().replace('Block/', '').replace('&&', ''))
           res.end()
         }).catch(err => {
           res.writeHead(200, {'Content-Type': 'application/json'});
@@ -25,11 +25,11 @@ explorer.connect(config.nodeToCommunicate.split(':')[1], config.nodeToCommunicat
       }
 
       if(req.url.startsWith('/api/getDataByWallet?')) {
-        explorer.write(`getWalletData/${req.url.split('?')[1]}`)
+        explorer.write(`getWalletData/${req.url.split('?')[1]}&&`)
         waitForData(explorer, 'walletData').then(data => {
           res.writeHead(200, {'Content-Type': 'application/json'});
 
-          res.write(data.toString().replace('walletData/', ''))
+          res.write(data.toString().replace('walletData/', '').replace('&&', ''))
           res.end()
         }).catch(err => {
           res.writeHead(200, {'Content-Type': 'application/json'});
