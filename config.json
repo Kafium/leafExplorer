@@ -1,0 +1,4 @@
+{
+  "nodeToCommunicate": "localhost:2556",
+  "portToListen": 8080
+}
